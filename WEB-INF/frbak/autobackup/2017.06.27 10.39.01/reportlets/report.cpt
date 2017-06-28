@@ -1,0 +1,3367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20151125" releaseVersion="8.0.0">
+<TableDataMap>
+<TableData name="ds1" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="endDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="batchCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="startDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="farmCode"/>
+<O>
+<![CDATA[110701]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT RIGHT(T2."PrcCode",
+         2) || '栋' AS "PrcName", (CASE
+    WHEN T0."ChickSexy" = 'F' THEN
+    '母鸡'
+    ELSE '公鸡' END) AS "ChickSexy", T0."DocEntry", T1."DocDate", T1."DateAge", T1."WeekAge", IFNULL(
+    (SELECT TOP 1 T2."MaleQty"
+    FROM "SBO_AG_FARM"."U_PYWOR1" T2,"SBO_AG_FARM"."U_PYWOR1" T1
+    WHERE (T2."DocEntry" = T1."DocEntry")
+            AND (T2."DocDate" < T1."DocDate")
+    ORDER BY  T2."DocDate" DESC), T0."InMaleJM") AS "BeginMaleQty", IFNULL(
+        (SELECT TOP 1 T2."FemQty"
+        FROM "SBO_AG_FARM"."U_PYWOR1" T2,"SBO_AG_FARM"."U_PYWOR1" T1
+        WHERE (T2."DocEntry" = T1."DocEntry")
+                AND (T2."DocDate" < T1."DocDate")
+        ORDER BY  T2."DocDate" DESC), T0."InFemJM") AS "BeginFemaleQty", IFNULL(
+            (SELECT TOP 1 T2."QtyTotal"
+            FROM  "SBO_AG_FARM"."U_PYWOR1" T2,"SBO_AG_FARM"."U_PYWOR1" T1
+            WHERE (T2."DocEntry" = T1."DocEntry")
+                    AND (T2."DocDate" < T1."DocDate")
+            ORDER BY  T2."DocDate" DESC), T0."InFemJM" + T0."InMaleJM") AS "BeginTotalQty", T1."FemDQty", T1."FemCQty", T1."FemMQty", T1."FemDCTotalByD", T1."FemDCRateByW", T1."FemDCTotal", T1."FemDCTotalByD" AS "Expr1", T1."FemDCTotalByD" * 100.00 / NULLIF(T0."InFemJM", 0) AS "FemDCRateByD", T1."FemDCRate", T1."MaleDQty", T1."MaleCQty", T1."MaleMQty", T1."MaleDCTotalByD", T1."MaleDCRateByW", T1."MaleDCTotal", T1."MaleDCTotalByD" * 100.00 / NULLIF(T0."InMaleJM", 0) AS "MaleDCRateByD", T1."MaleDcRate", T1."FemQty", T1."MaleQty", T1."QtyTotal", T1."FemFeedQty", T1."MaleFeedQty", T1."FeedQtyByD", T1."FeedQtyByW", T1."FeedQty", T1."FemFeedAvg", T1."MaleFeedAvg", T1."FeedItemCode", T1."FeedProgram", T1."FeedMinute", T1."WaterQty", T1."WFRate", T1."WaterAvg", T1."LightHour", T1."LightLux", T1."FemWeiAct", T1."FemWeiStd", T1."FemWeiUn", T1."MaleWeiAct", T1."MaleWeiStd", T1."MaleWeiUn", T1."AntiND", T1."AntiH9", T1."AntiH5", T1."FuleQty", T1."InMinTemp", T1."InMaxTemp", T1."OutMinTemp", T1."InMinHumi", T1."InMaxHumi", T1."OutMinHumi", T1."OutMaxHumi", T1."OutMaxTemp", T1."FeTempMin", T1."FeTempMax", T1."VacRoute", T1."VacName", T1."VacMade", T1."VacDose", T1."VacBatch", T1."VacMinute", T1."VacMan", T1."VacUsed", T1."MedRoute", T1."MedName", T1."MedMade", T1."MedDose", T1."MedUsed", T1."MedBatch", T1."MedMinute", T1."MedMan"
+        FROM "SBO_AG_FARM"."U_PYOWOR" T0
+    INNER JOIN "SBO_AG_FARM"."U_PYWOR1" T1
+    ON T0."DocEntry" = T1."DocEntry"
+INNER JOIN "SBO_AG_FARM"."OPRC" T2
+    ON T2."PrcCode" = T0."OcrCode3"
+    where T0."FarmCode" = '${farmCode}'
+        AND (T0."BatchNum" = '${batchCode}')
+        AND (T1."DocDate"
+    BETWEEN '${startDate}'
+        AND '${endDate}')
+ORDER BY  T1."DocDate", "PrcName"; ]]></Query>
+</TableData>
+<TableData name="Tree1" class="com.fr.data.impl.RecursionTableData">
+<markFields>
+<![CDATA[0]]></markFields>
+<markFieldsName>
+<![CDATA[PrcName]]></markFieldsName>
+<originalTableDataName>
+<![CDATA[ds1]]></originalTableDataName>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR F="0" T="3"/>
+<FR/>
+<HC F="0" T="0"/>
+<FC/>
+<UPFCR COLUMN="true" ROW="true"/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,1143000,1143000,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[4023360,2743200,2743200,2743200,2743200,2743200,2743200,4569001,3285843,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3557847,5054138,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3291840,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="0" cs="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="35" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="36" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="37" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="39" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="40" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="41" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="42" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="43" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="44" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="45" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="46" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="47" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="48" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="50" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="51" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="52" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="53" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="54" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="55" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="56" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="57" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="58" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="59" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="60" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="61" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="62" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="63" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="64" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="65" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="66" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="67" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="68" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="69" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="70" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="71" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="72" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="73" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="74" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="75" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="1" rs="3" s="0">
+<O>
+<![CDATA[Date]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="1" rs="3" s="0">
+<O>
+<![CDATA[House]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="1" rs="3" s="0">
+<O>
+<![CDATA[Sex]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="1" cs="2" s="0">
+<O>
+<![CDATA[Age]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="1" cs="3" s="0">
+<O>
+<![CDATA[Beginning No. Birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="1" cs="7" s="0">
+<O>
+<![CDATA[Female depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="1" cs="7" s="0">
+<O>
+<![CDATA[Male depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="1" cs="3" s="0">
+<O>
+<![CDATA[Ending No. birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="1" cs="10" s="0">
+<O>
+<![CDATA[Feed cons]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="35" r="1" cs="3" s="0">
+<O>
+<![CDATA[Water consumption]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="1" cs="2" s="0">
+<O>
+<![CDATA[Lighting program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="40" r="1" cs="6" s="0">
+<O>
+<![CDATA[Bodyweight(kg)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="46" r="1" cs="3" s="0">
+<O>
+<![CDATA[Antibody]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="1" s="0">
+<O>
+<![CDATA[Fuel]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="50" r="1" cs="2" s="0">
+<O>
+<![CDATA[Indoor Temp.(℃)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="52" r="1" cs="2" s="0">
+<O>
+<![CDATA[Outdoor Temp.(℃)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="54" r="1" cs="2" s="0">
+<O>
+<![CDATA[Body Temp.(℃)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="56" r="1" cs="2" s="0">
+<O>
+<![CDATA[Out Humi.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="58" r="1" cs="2" s="0">
+<O>
+<![CDATA[In Humi.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="60" r="1" cs="8" s="0">
+<O>
+<![CDATA[Vaccine]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="68" r="1" cs="8" s="0">
+<O>
+<![CDATA[Medicine]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="2" cs="2" s="0">
+<O>
+<![CDATA[Age]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="2" cs="3" s="0">
+<O>
+<![CDATA[Beginning No. Birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="2" cs="5" s="0">
+<O>
+<![CDATA[Female depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="2" cs="2" s="0">
+<O>
+<![CDATA[Cum]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="2" cs="5" s="0">
+<O>
+<![CDATA[Male depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="2" cs="2" s="0">
+<O>
+<![CDATA[Cum]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="2" cs="3" s="0">
+<O>
+<![CDATA[Ending No. birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="2" cs="5" s="0">
+<O>
+<![CDATA[Feed cons(kg)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="2" cs="2" s="0">
+<O>
+<![CDATA[Feed cons/100 birds/day]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="2" s="0">
+<O>
+<![CDATA[Feed Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="2" s="0">
+<O>
+<![CDATA[Feed Program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="2" s="0">
+<O>
+<![CDATA[Feed Time(Minute)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="35" r="2" s="0">
+<O>
+<![CDATA[kl.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="36" r="2" s="0">
+<O>
+<![CDATA[Water/Feed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="37" r="2" s="0">
+<O>
+<![CDATA[ml./bird]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="2" s="0">
+<O>
+<![CDATA[Hour]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="39" r="2" s="0">
+<O>
+<![CDATA[Lux]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="40" r="2" cs="3" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="43" r="2" cs="3" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="46" r="2" s="0">
+<O>
+<![CDATA[ND]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="47" r="2" s="0">
+<O>
+<![CDATA[AI-H9]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="48" r="2" s="0">
+<O>
+<![CDATA[AI-H5]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="2" s="0">
+<O>
+<![CDATA[Cons]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="50" r="2" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="51" r="2" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="52" r="2" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="53" r="2" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="54" r="2" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="55" r="2" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="56" r="2" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="57" r="2" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="58" r="2" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="59" r="2" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="60" r="2" s="0">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="61" r="2" s="0">
+<O>
+<![CDATA[Vac Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="62" r="2" s="0">
+<O>
+<![CDATA[Manufactures]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="63" r="2" s="0">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="64" r="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="65" r="2" s="0">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="66" r="2" s="0">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="67" r="2" s="0">
+<O>
+<![CDATA[Reponsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="68" r="2" s="0">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="69" r="2" s="0">
+<O>
+<![CDATA[Med Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="70" r="2" s="0">
+<O>
+<![CDATA[Manufacture]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="71" r="2" s="0">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="72" r="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="73" r="2" s="0">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="74" r="2" s="0">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="75" r="2" s="0">
+<O>
+<![CDATA[Reponsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="3" s="0">
+<O>
+<![CDATA[d]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="3" s="0">
+<O>
+<![CDATA[wk]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="3" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="3" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="3" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="3" s="0">
+<O>
+<![CDATA[Dead]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="3" s="0">
+<O>
+<![CDATA[Cull]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="3" s="0">
+<O>
+<![CDATA[Sexing error]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="3" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="3" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="3" s="0">
+<O>
+<![CDATA[birds]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="3" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="3" s="0">
+<O>
+<![CDATA[Dead]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="3" s="0">
+<O>
+<![CDATA[Cull]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="3" s="0">
+<O>
+<![CDATA[Sexing error]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="3" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="3" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="3" s="0">
+<O>
+<![CDATA[birds]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="3" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="3" s="0">
+<O>
+<![CDATA[Fmale]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="3" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="3" s="0">
+<O>
+<![CDATA[Total(d)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="3" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="3" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="3" s="0">
+<O>
+<![CDATA[Total(d)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="3" s="0">
+<O>
+<![CDATA[Total(w)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="3" s="0">
+<O>
+<![CDATA[Cum.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="3" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="3" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="3" s="0">
+<O>
+<![CDATA[Feed Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="3" s="0">
+<O>
+<![CDATA[Feed Program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="3" s="0">
+<O>
+<![CDATA[Feed Time(Minute)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="35" r="3" s="0">
+<O>
+<![CDATA[kl.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="36" r="3" s="0">
+<O>
+<![CDATA[Water/Feed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="37" r="3" s="0">
+<O>
+<![CDATA[ml./bird]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="3" s="0">
+<O>
+<![CDATA[Hour]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="39" r="3" s="0">
+<O>
+<![CDATA[Lux]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="40" r="3" s="0">
+<O>
+<![CDATA[Act B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="41" r="3" s="0">
+<O>
+<![CDATA[Std B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="42" r="3" s="0">
+<O>
+<![CDATA[%UniFormity]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="43" r="3" s="0">
+<O>
+<![CDATA[Act B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="44" r="3" s="0">
+<O>
+<![CDATA[Std B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="45" r="3" s="0">
+<O>
+<![CDATA[%UniFormity]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="46" r="3" s="0">
+<O>
+<![CDATA[ND]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="47" r="3" s="0">
+<O>
+<![CDATA[AI-H9]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="48" r="3" s="0">
+<O>
+<![CDATA[AI-H5]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="3" s="0">
+<O>
+<![CDATA[Cons]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="50" r="3" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="51" r="3" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="52" r="3" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="53" r="3" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="54" r="3" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="55" r="3" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="56" r="3" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="57" r="3" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="58" r="3" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="59" r="3" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="60" r="3" s="0">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="61" r="3" s="0">
+<O>
+<![CDATA[Vac Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="62" r="3" s="0">
+<O>
+<![CDATA[Manufactures]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="63" r="3" s="0">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="64" r="3" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="65" r="3" s="0">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="66" r="3" s="0">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="67" r="3" s="0">
+<O>
+<![CDATA[Reponsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="68" r="3" s="0">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="69" r="3" s="0">
+<O>
+<![CDATA[Med Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="70" r="3" s="0">
+<O>
+<![CDATA[Manufacture]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="71" r="3" s="0">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="72" r="3" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="73" r="3" s="0">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="74" r="3" s="0">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="75" r="3" s="0">
+<O>
+<![CDATA[Reponsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="DocDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="1" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="PrcName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="2" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ChickSexy"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="3" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="DateAge"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="4" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WeekAge"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="5" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="BeginMaleQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="6" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="BeginFemaleQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="7" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="BeginTotalQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="8" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="9" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemCQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="10" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemMQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="11" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCTotalByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="12" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCRateByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="13" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCTotal"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="14" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="15" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="16" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleCQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="17" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleMQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="18" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDCTotalByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="19" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDCRateByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="20" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDCTotal"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="21" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDcRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="22" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="23" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="24" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="QtyTotal"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="25" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemFeedQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="26" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleFeedQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="27" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedQtyByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="28" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedQtyByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="29" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="30" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemFeedAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="31" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleFeedAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="32" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedItemCode"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="33" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedProgram"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="34" r="4" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedMinute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="35" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WaterQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="36" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WFRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="37" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WaterAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="38" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="LightHour"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="39" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="LightLux"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="40" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemWeiAct"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="41" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemWeiStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="42" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemWeiUn"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="43" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleWeiAct"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="44" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleWeiStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="45" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleWeiUn"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="46" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="AntiND"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="47" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="AntiH9"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="48" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="AntiH5"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="49" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FuleQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="50" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMinTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="51" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMaxTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="52" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMinTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="53" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMaxTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="54" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeTempMin"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="55" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeTempMax"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="56" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMinHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="57" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMaxHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="58" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMinHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="59" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMaxHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="60" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacRoute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="61" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="62" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacMade"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="63" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacDose"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="64" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacUsed"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="65" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacBatch"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="66" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacMinute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="67" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacMan"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="68" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedRoute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="69" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="70" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedMade"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="71" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedDose"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="72" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedUsed"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="73" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedBatch"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="74" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedMinute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="75" r="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedMan"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[各行颜色]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-1513240"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="2" r="5">
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="2"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="7" r="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="6">
+<PrivilegeControl/>
+<Expand extendable="3"/>
+</C>
+<C c="1" r="6">
+<PrivilegeControl/>
+<Expand extendable="3"/>
+</C>
+<C c="2" r="6">
+<PrivilegeControl/>
+<Expand extendable="3"/>
+</C>
+<C c="6" r="9" s="4">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="10" s="4">
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="272232000" height="48772800"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/>
+<PWTitle>
+<![CDATA[Parameter]]></PWTitle>
+<ParameterUI class="com.fr.form.main.parameter.FormParameterUI">
+<Parameters/>
+<Layout class="com.fr.form.ui.container.WParameterLayout">
+<WidgetName name="para"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Margin top="0" left="0" bottom="0" right="0"/>
+<Border>
+<border style="0" color="-723724" type="0" borderStyle="0"/>
+<WidgetTitle>
+<O>
+<![CDATA[新建标题]]></O>
+<FRFont name="SimSun" style="0" size="72"/>
+<Position pos="0"/>
+</WidgetTitle>
+<Alpha alpha="1.0"/>
+</Border>
+<Background name="ColorBackground" color="-1118482"/>
+<LCAttr vgap="0" hgap="0" compInterval="0"/>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="LabelfarmCode"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[Farm:]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="80"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="50" y="25" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.ComboBox">
+<Listener event="afteredit">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[var batchCode = this.options.form.getWidgetByName("batchCode");
+batchCode.reset();
+
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="farmCode"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<EMSG>
+<![CDATA[Please choose FarmCode]]></EMSG>
+<allowBlank>
+<![CDATA[false]]></allowBlank>
+<DirectEdit>
+<![CDATA[false]]></DirectEdit>
+<Dictionary class="com.fr.data.impl.TableDataDictionary">
+<FormulaDictAttr kiName="PrcCode" formula="=$$$+&quot;  &quot;+ VALUE(&quot;selectPulletFarm&quot;,&quot;PrcName&quot;,&quot;PrcCode&quot;,$$$,1)"/>
+<TableDataDictAttr>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[selectPulletFarm]]></Name>
+</TableData>
+</TableDataDictAttr>
+</Dictionary>
+<widgetValue>
+<O>
+<![CDATA[]]></O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="130" y="25" width="160" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.parameter.FormSubmitButton">
+<Listener event="click">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[var batchCode = this.options.form.getWidgetByName("batchCode").getValue();
+var farmCode = this.options.form.getWidgetByName("farmCode").getValue();
+if(farmCode != '' && batchCode == ''){
+	FR.Msg.alert(FR.i18n.Alert, "Please choose Flock");
+	return false;
+}
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="Search"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[查询]]></Text>
+<Hotkeys>
+<![CDATA[enter]]></Hotkeys>
+</InnerWidget>
+<BoundsAttr x="768" y="53" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="label0"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[Flock:]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="80"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="351" y="25" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.ComboBox">
+<WidgetName name="batchCode"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<EMSG>
+<![CDATA[Please choose Flock]]></EMSG>
+<DirectEdit>
+<![CDATA[false]]></DirectEdit>
+<CustomData>
+<![CDATA[false]]></CustomData>
+<Dictionary class="com.fr.data.impl.TableDataDictionary">
+<FormulaDictAttr kiName="PrcCode" formula="=$$$+&quot;  &quot;+ VALUE(&quot;selectBatch&quot;,&quot;PrcName&quot;,&quot;PrcCode&quot;,$$$,1)"/>
+<TableDataDictAttr>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[selectBatch]]></Name>
+</TableData>
+</TableDataDictAttr>
+</Dictionary>
+<widgetValue/>
+</InnerWidget>
+<BoundsAttr x="431" y="25" width="214" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="LabelstartDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[Date From:]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="80"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="50" y="53" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.DateEditor">
+<WidgetName name="startDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<EMSG>
+<![CDATA[Please choose Date]]></EMSG>
+<allowBlank>
+<![CDATA[false]]></allowBlank>
+<DirectEdit>
+<![CDATA[false]]></DirectEdit>
+<DateAttr/>
+<widgetValue>
+<O t="Date">
+<![CDATA[1498152422005]]></O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="130" y="53" width="160" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="LabelendDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[To:]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="80"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="351" y="53" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.DateEditor">
+<WidgetName name="endDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<EMSG>
+<![CDATA[Please choose Date]]></EMSG>
+<allowBlank>
+<![CDATA[false]]></allowBlank>
+<DirectEdit>
+<![CDATA[false]]></DirectEdit>
+<DateAttr/>
+<widgetValue>
+<O t="Date">
+<![CDATA[1498152575248]]></O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="431" y="53" width="214" height="21"/>
+</Widget>
+<Sorted sorted="false"/>
+<Display display="true"/>
+<DelayDisplayContent delay="true"/>
+<Position position="0"/>
+<Design_Width design_width="958"/>
+<MobileWidgetList>
+<Widget widgetName="farmCode"/>
+<Widget widgetName="batchCode"/>
+<Widget widgetName="startDate"/>
+<Widget widgetName="endDate"/>
+</MobileWidgetList>
+<WidgetNameTagMap>
+<NameTag name="endDate" tag="To:"/>
+<NameTag name="batchCode" tag="Flock:"/>
+<NameTag name="startDate" tag="Date From:"/>
+<NameTag name="farmCode" tag="Farm:"/>
+</WidgetNameTagMap>
+</Layout>
+<DesignAttr width="958" height="80"/>
+</ParameterUI>
+</ReportParameterAttr>
+<StyleList>
+<Style imageLayout="1">
+<FRFont name="Times New Roman" style="1" size="80"/>
+<Background name="ColorBackground" color="-6697729"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="Times New Roman" style="0" size="88"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00]]></Format>
+<FRFont name="Times New Roman" style="0" size="88"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0]]></Format>
+<FRFont name="Times New Roman" style="0" size="88"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="80"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="IAA"/>
+<PreviewType PreviewType="0"/>
+</WorkBook>
