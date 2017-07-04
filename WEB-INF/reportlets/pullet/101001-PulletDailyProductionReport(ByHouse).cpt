@@ -376,7 +376,7 @@ if(farmCode != '' && batchCode == ''){
 </WidgetAttr>
 <widgetValue>
 <O>
-<![CDATA[Batch:]]></O>
+<![CDATA[Flock:]]></O>
 </widgetValue>
 <LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
 <FRFont name="SimSun" style="0" size="72"/>
