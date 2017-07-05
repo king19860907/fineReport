@@ -707,7 +707,7 @@ if(farmCode != '' && batchCode == ''){
 <PrivilegeControl/>
 </WidgetAttr>
 <Text>
-<![CDATA[查询]]></Text>
+<![CDATA[Search]]></Text>
 <Hotkeys>
 <![CDATA[enter]]></Hotkeys>
 </InnerWidget>
@@ -809,10 +809,11 @@ if(farmCode != '' && batchCode == ''){
 <MobileWidgetList>
 <Widget widgetName="farmCode"/>
 <Widget widgetName="houseCode"/>
+<Widget widgetName="batchCode"/>
 </MobileWidgetList>
 <WidgetNameTagMap>
+<NameTag name="batchCode" tag="Flock:"/>
 <NameTag name="houseCode" tag="House:"/>
-<NameTag name="batchNum" tag="Flock:"/>
 <NameTag name="farmCode" tag="Farm:"/>
 </WidgetNameTagMap>
 </Layout>

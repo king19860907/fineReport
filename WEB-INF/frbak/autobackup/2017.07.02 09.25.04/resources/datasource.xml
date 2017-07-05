@@ -105,22 +105,5 @@ ORDER BY 1]]></Query>
 <![CDATA[SELECT "PrcCode", "PrcName" FROM "SBO_AG_FARM"."OPRC" T0
 WHERE ( T0."U_PulFact" = '${farmCode}') AND T0."DimCode" = 3]]></Query>
 </TableData>
-<TableData name="selectHouse" class="com.fr.data.impl.DBTableData">
-<Parameters>
-<Parameter>
-<Attributes name="farmCode"/>
-<O>
-<![CDATA[]]></O>
-</Parameter>
-</Parameters>
-<Attributes maxMemRowCount="-1"/>
-<Connection class="com.fr.data.impl.NameDatabaseConnection">
-<DatabaseName>
-<![CDATA[FRDemo]]></DatabaseName>
-</Connection>
-<Query>
-<![CDATA[SELECT "PrcCode", "PrcName" FROM "SBO_AG_FARM"."OPRC" T0
-WHERE ( T0."U_FarmCode" = '${farmCode}') AND T0."DimCode" = 2]]></Query>
-</TableData>
 </TableDataMap>
 </DatasourceManager>

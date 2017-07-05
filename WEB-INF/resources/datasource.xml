@@ -102,8 +102,58 @@ ORDER BY 1]]></Query>
 <![CDATA[FRDemo]]></DatabaseName>
 </Connection>
 <Query>
-<![CDATA[SELECT "PrcCode", "PrcName" FROM "SBO_AG_FARM"."OPRC" T0
-WHERE ( T0."U_PulFact" = '${farmCode}') AND T0."DimCode" = 3]]></Query>
+<![CDATA[SELECT T0."PrcCode",T0."PrcName" FROM SBO_AG_FARM.OPRC T0
+    INNER JOIN SBO_AG_FARM.OPRC T1 ON T1."PrcCode" ='${farmCode}' AND T1."DimCode" = '1' 
+WHERE (CASE WHEN T1."U_CostType"  IN ('P') THEN T0."U_PulFact" 
+           WHEN T1."U_CostType" IN ('G') THEN T0."U_FarmCode"
+           WHEN T1."U_CostType" IN ('L') THEN T0."U_LayerFact" END) = '${farmCode}' AND T0."DimCode" = 3]]></Query>
+</TableData>
+<TableData name="selectLayerFarm" class="com.fr.data.impl.DBTableData">
+<Parameters/>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[			 SELECT "PrcCode", "PrcName" FROM "SBO_AG_FARM"."OPRC" T0
+ JOIN (
+ 	SELECT T0."USER_CODE",T0."USERID",T2."FormId" "FarmID"  ,T3."U_CostType"
+			 FROM "SBO_AG_FARM"."OUSR" T0
+			   CROSS JOIN "SBO_AG_FARM"."OUPT" T1
+			   INNER JOIN "SBO_AG_FARM"."UPT1" T2 ON T1."AbsId" = T2."PermId"
+			   INNER JOIN "SBO_AG_FARM"."OPRC" T3 ON T2."FormId" = T3."PrcCode"
+			 WHERE T1."FathId" = 'MTC_UFM' AND T0."SUPERUSER"='Y'
+			 UNION ALL
+			 SELECT T0."USER_CODE",T0."USERID",T2."FormId" "FarmID"  , T4."U_CostType"
+			 FROM "SBO_AG_FARM"."OUSR" T0
+			   CROSS JOIN "SBO_AG_FARM"."OUPT" T1
+			   INNER JOIN "SBO_AG_FARM"."UPT1" T2 ON T1."AbsId" = T2."PermId"
+			   INNER JOIN "SBO_AG_FARM"."USR3" T3 ON T0."USERID" = T3."UserLink" AND T1."AbsId" = T3."PermId"  AND T3."Permission"='F'
+			   JOIN "SBO_AG_FARM"."OPRC" T4 ON T2."FormId" = T4."PrcCode"
+			 WHERE T1."FathId" = 'MTC_UFM' AND T0."SUPERUSER"='N' AND T0."GROUPS"=0
+ ) T1 ON T0."PrcCode" = T1."FarmID" 
+ JOIN "SBO_AG_FARM"."OUSR" T2 ON T1."USERID" = T2."USERID"
+WHERE (T2."USER_CODE" = 'manager') AND T1."U_CostType" ='L'
+ORDER BY 1]]></Query>
+</TableData>
+<TableData name="selectHouse" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="farmCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[           
+SELECT "PrcCode", "PrcName" FROM SBO_AG_FARM.OPRC T0
+WHERE ( T0."U_FarmCode" = '${farmCode}') AND T0."DimCode" = 2]]></Query>
 </TableData>
 </TableDataMap>
 </DatasourceManager>
