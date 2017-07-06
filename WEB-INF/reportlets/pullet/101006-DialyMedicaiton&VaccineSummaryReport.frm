@@ -166,7 +166,7 @@ if(farmCode != '' && batchCode == ''){
 <PrivilegeControl/>
 </WidgetAttr>
 <Text>
-<![CDATA[查询]]></Text>
+<![CDATA[Search]]></Text>
 <Hotkeys>
 <![CDATA[enter]]></Hotkeys>
 </InnerWidget>
