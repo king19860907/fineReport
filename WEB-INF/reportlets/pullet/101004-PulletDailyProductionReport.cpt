@@ -3171,7 +3171,7 @@ if(farmCode != '' && batchCode == ''){
 <PrivilegeControl/>
 </WidgetAttr>
 <Text>
-<![CDATA[查询]]></Text>
+<![CDATA[Search]]></Text>
 <Hotkeys>
 <![CDATA[enter]]></Hotkeys>
 </InnerWidget>
@@ -3285,7 +3285,7 @@ if(farmCode != '' && batchCode == ''){
 <DateAttr/>
 <widgetValue>
 <O t="Date">
-<![CDATA[1498152575248]]></O>
+<![CDATA[1498147200000]]></O>
 </widgetValue>
 </InnerWidget>
 <BoundsAttr x="431" y="53" width="214" height="21"/>
