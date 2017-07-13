@@ -1,0 +1,2936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20151125" releaseVersion="8.0.0">
+<TableDataMap>
+<TableData name="ds1" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="docEntry"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="batchCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="houseCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="farmCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT *
+FROM 
+    (SELECT T1."DocEntry",
+         t2."U_EBDate",
+         t2."U_ZYDate",
+         T1."DocDate",
+         T1."DateAge",
+         T1."DayOfWeek",
+         T1."WeekAge",
+         T1."ProdAge",
+         T1."OBFemQty",
+         T1."OBMaleQty",
+         T1."OBQtyTotal",
+         T1."FMRatio",
+         T1."FemDQty",
+         T1."FemCQty",
+         T1."FemMQty",
+         T1."FemDCTotalByD",
+        
+        CASE
+        WHEN T1."OBFemQty" = 0 THEN
+        0
+        ELSE T1."FemDCTotalByD" * 100.00 / T1."OBFemQty"
+        END AS "FemDCRateByD", T1."FemDCRateByW",
+        CASE
+        WHEN "WeekAge" < 26 THEN
+        T1."FemDCTotal"
+        ELSE IFNULL(
+        (SELECT SUM(U1."FemDCTotalByD")
+        FROM SBO_AG_FARM."U_PDWOR1" U1
+        WHERE U1."DocEntry" = T1."DocEntry"
+                AND U1."DocDate" <= T1."DocDate"
+                AND U1."WeekAge" > 25), 0)
+            END AS "FemDCTotal",
+            CASE
+            WHEN "WeekAge" < 26 THEN
+            T1."FemDCRate"
+            ELSE IFNULL(
+            (SELECT SUM(U1."FemDCTotalByD")
+            FROM SBO_AG_FARM."U_PDWOR1" U1
+            WHERE U1."DocEntry" = T1."DocEntry"
+                    AND U1."DocDate" <= T1."DocDate"
+                    AND U1."WeekAge" > 25), 0) * 100.00 / NULLIF(CASE
+                WHEN T1."DocDate" < T2."U_EBDate" THEN
+                T0."BInFemJM" + T0."BinFemAdjQty"
+                ELSE T0."InFemJM" + T0."AinFemAdjQty" END, 0)
+                END AS "FemDCRate", T1."MaleDQty", T1."MaleCQty", T1."MaleMQty", T1."MaleDCTotalByD",
+                CASE
+                WHEN T1."OBMaleQty" = 0 THEN
+                0
+                ELSE T1."MaleDCTotalByD" * 100.00 / T1."OBMaleQty"
+                END AS "MaleDCRateByD", T1."MaleDCRateByW",
+                CASE
+                WHEN "WeekAge" < 26 THEN
+                T1."MaleDCTotal"
+                ELSE IFNULL(
+                (SELECT SUM(U1."MaleDCTotalByD")
+                FROM SBO_AG_FARM."U_PDWOR1" U1
+                WHERE U1."DocEntry" = T1."DocEntry"
+                        AND U1."DocDate" <= T1."DocDate"
+                        AND U1."WeekAge" > 25), 0)
+                    END AS "MaleDCTotal",
+                    CASE
+                    WHEN "WeekAge" < 26 THEN
+                    T1."MaleDcRate"
+                    ELSE IFNULL(
+                    (SELECT SUM(U1."MaleDCTotalByD")
+                    FROM SBO_AG_FARM."U_PDWOR1" U1
+                    WHERE U1."DocEntry" = T1."DocEntry"
+                            AND U1."DocDate" <= T1."DocDate"
+                            AND U1."WeekAge" > 25), 0) * 100.00 / NULLIF(CASE
+                        WHEN T1."DocDate" < T2."U_EBDate" THEN
+                        T0."BInMaleJM" + T0."BinMaleAdjQty"
+                        ELSE T0."InMaleJM" + T0."AinMaleAdjQty" END, 0)
+                        END AS "MaleDCRate", T1."FemAdd", T1."FemLess", T1."MaleAdd", T1."MaleLess", T1."FemQty", T1."MaleQty", T1."QtyTotal", T1."FemFeedQty", T1."MaleFeedQty", T1."FeedQtyByD", T1."FeedQtyByW", T1."FeedQty", T1."FemFeedAvg", T1."MaleFeedAvg", T1."FemFeedAvgW", T1."MaleFeedAvgW", T1."FemFeedTime", T1."FemFeedBat", T1."FemProgram", T1."MaleFeedTime", T1."MaleFeedBat", T1."MaleProgram", T1."WaterQty", T1."WFRate", T1."WaterAvg", T1."LightHour", T1."LightLux", T1."FemWeiAvg", T1."FemWeiStd", T1."FemWeiUn", T1."MaleWeiAvg", T1."MaleWeiStd", T1."MaleWeiUn", T1."AntiND", T1."AntiH9", T1."AntiH5", T1."FuleQty", T1."InMaxTemp", T1."InMinTemp", T1."OutMaxTemp", T1."OutMinTemp", T1."InMaxHumi", T1."InMinHumi", T1."OutMaxHumi", T1."OutMinHumi", T1."FeTempMax", T1."FeTempMin", T1."EggQty", T1."EggRatio", T1."EggStdNoByPer", T1."EggStdNoByDay", T1."EggTotalByW", T1."EggRatioByW", T1."EggRatioStd", T1."EggTotalStd", T1."EggTotalFact", T1."EggWFact", T1."EggWStd", T1."DYEggQty", T1."SMEggQty", T1."BREggQty", T1."CAEggQty", T1."LEggQty", T1."CullEggQty", T1."HaEggQty", T1."HaEggRatio", T1."HaEggStdNoByPer", T1."HaEggStdNoByDay", T1."HaEggeff", T1."HaEggTotalByW", T1."HaEggRatioByW", T1."HaEggRatioStd", T1."HaEggTotalFact", T1."HaEggTotalStd", T1."HaEggWFact", T1."HaEggWStd", T1."FERatio", T1."FERatioStd", T1."Remarks", T1."VacRoute", T1."VacName", T1."VacMade", T1."VacDose", T1."VacUsed", T1."VacBatch", T1."VacMinute", T1."VacMan", T1."MedRoute", T1."MedName", T1."MedMade", T1."MedDose", T1."MedUsed", T1."MedMinute", T1."MedMan", T1."MedBatch"
+                    FROM SBO_AG_FARM.U_PDOWOR T0
+                    INNER JOIN SBO_AG_FARM.U_PDWOR1 T1
+                        ON T0."DocEntry" = T1."DocEntry"
+                    INNER JOIN SBO_AG_FARM.OPRC t2
+                        ON t2."PrcCode" = t0."BatchNum"
+                    WHERE T0."FarmCode" = '${farmCode}'
+                            AND (T0."OcrCode3" = '${houseCode}'
+                            OR IFNULL('${houseCode}', '') = '')
+                            AND T0."BatchNum" = '${batchCode}'
+                            AND T1."DocDate" < NOW()) AS t1
+                WHERE t1."DocEntry" = ${docEntry} order by t1."DocDate" asc; ]]></Query>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR F="0" T="5"/>
+<FR/>
+<HC F="0" T="0"/>
+<FC/>
+<UPFCR COLUMN="true" ROW="true"/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[838899,973122,1219200,1143000,805343,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[3993159,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3187816,2743200,2743200,2743200,2743200,2743200,2743200,3389152,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3422708,2743200,3254928,2743200,3691155,4160939,2743200,3791823,4026715,2743200,3254928,2743200,2743200,2743200,2743200,2743200,3187816,2743200,2743200,3456264,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3187816,2743200,2743200,3556932,2743200,2743200,2743200,2743200,3288484,2743200,2743200,3624044,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="1" rs="4" s="0">
+<O>
+<![CDATA[Date]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="1" cs="3" s="0">
+<O>
+<![CDATA[Age]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="1" cs="3" s="0">
+<O>
+<![CDATA[Beginning No. Birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="1" s="0">
+<O>
+<![CDATA[M/F]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="1" cs="7" s="0">
+<O>
+<![CDATA[Female depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="1" cs="7" s="0">
+<O>
+<![CDATA[Male depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="1" cs="4" s="0">
+<O>
+<![CDATA[Transfer]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="1" cs="3" s="0">
+<O>
+<![CDATA[Ending No. birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="1" cs="15" s="0">
+<O>
+<![CDATA[Feed cons]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="44" r="1" cs="3" s="0">
+<O>
+<![CDATA[Water consumtion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="47" r="1" cs="2" s="0">
+<O>
+<![CDATA[Light program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="1" cs="6" s="0">
+<O>
+<![CDATA[Bodyweight(kg)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="55" r="1" cs="3" s="0">
+<O>
+<![CDATA[Antibody]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="58" r="1" s="0">
+<O>
+<![CDATA[Fuel]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="59" r="1" cs="2" s="0">
+<O>
+<![CDATA[Indoor Temp.(℃)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="61" r="1" cs="2" s="0">
+<O>
+<![CDATA[Outdoor Temp.(℃)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="63" r="1" cs="2" s="0">
+<O>
+<![CDATA[Body Temp.(℃)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="65" r="1" cs="2" s="0">
+<O>
+<![CDATA[Out Humi.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="67" r="1" cs="2" s="0">
+<O>
+<![CDATA[In Humi.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="69" r="1" cs="7" s="0">
+<O>
+<![CDATA[Total eggs prod]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="76" r="1" cs="2" s="0">
+<O>
+<![CDATA[Egg wt]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="78" r="1" cs="6" s="0">
+<O>
+<![CDATA[Cull eggs]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="84" r="1" cs="9" s="0">
+<O>
+<![CDATA[Total hatching eggs]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="93" r="1" rs="4" s="0">
+<O>
+<![CDATA[Feed/Egg]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="94" r="1" cs="8" s="0">
+<O>
+<![CDATA[Vaccine]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="102" r="1" cs="8" s="0">
+<O>
+<![CDATA[Medicine]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="2" cs="3" s="0">
+<O>
+<![CDATA[Age]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="2" cs="3" s="0">
+<O>
+<![CDATA[Beginning No. Birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="2" rs="3" s="0">
+<O>
+<![CDATA[M/F]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="2" cs="5" s="0">
+<O>
+<![CDATA[Female depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="2" cs="2" s="0">
+<O>
+<![CDATA[Cum.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="2" cs="5" s="0">
+<O>
+<![CDATA[Male depletion]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="2" cs="2" s="0">
+<O>
+<![CDATA[Cum.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="2" cs="2" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="2" cs="2" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="2" cs="3" s="0">
+<O>
+<![CDATA[Ending No. birds placed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="2" cs="5" s="0">
+<O>
+<![CDATA[Feed cons(kg)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="2" cs="2" s="0">
+<O>
+<![CDATA[Feed cons/100 birds/day]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="36" r="2" cs="2" s="0">
+<O>
+<![CDATA[Feed cons/100 birds/Week]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="2" cs="6" s="0">
+<O>
+<![CDATA[Feed time(Min) Feed info]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="44" r="2" rs="3" s="0">
+<O>
+<![CDATA[kl.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="45" r="2" rs="3" s="0">
+<O>
+<![CDATA[Water/Feed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="46" r="2" rs="3" s="0">
+<O>
+<![CDATA[ml./bird]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="47" r="2" rs="3" s="0">
+<O>
+<![CDATA[Hour]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="48" r="2" rs="3" s="0">
+<O>
+<![CDATA[Lux]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="2" cs="3" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="52" r="2" cs="3" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="55" r="2" rs="3" s="0">
+<O>
+<![CDATA[ND]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="56" r="2" rs="3" s="0">
+<O>
+<![CDATA[AI-H9]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="57" r="2" rs="3" s="0">
+<O>
+<![CDATA[AI-H5]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="58" r="2" rs="3" s="0">
+<O>
+<![CDATA[Cons]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="59" r="2" rs="3" s="0">
+<O>
+<![CDATA[MIN]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="60" r="2" rs="3" s="0">
+<O>
+<![CDATA[MAX]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="61" r="2" rs="3" s="0">
+<O>
+<![CDATA[MIN]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="62" r="2" rs="3" s="0">
+<O>
+<![CDATA[MAX]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="63" r="2" rs="3" s="0">
+<O>
+<![CDATA[MIN]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="64" r="2" rs="3" s="0">
+<O>
+<![CDATA[MAX]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="65" r="2" rs="3" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="66" r="2" rs="3" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="67" r="2" rs="3" s="0">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="68" r="2" rs="3" s="0">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="69" r="2" cs="2" s="0">
+<O>
+<![CDATA[This day]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="71" r="2" cs="3" s="0">
+<O>
+<![CDATA[This week]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="74" r="2" cs="2" s="0">
+<O>
+<![CDATA[Egg prod cum.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="76" r="2" rs="3" s="0">
+<O>
+<![CDATA[Act wt(g)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="77" r="2" rs="3" s="0">
+<O>
+<![CDATA[Std wt(g)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="78" r="2" rs="3" s="0">
+<O>
+<![CDATA[DY]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="79" r="2" rs="3" s="0">
+<O>
+<![CDATA[Small]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="80" r="2" rs="3" s="0">
+<O>
+<![CDATA[Caface]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="81" r="2" rs="3" s="0">
+<O>
+<![CDATA[Broken]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="82" r="2" rs="3" s="0">
+<O>
+<![CDATA[Lost]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="83" r="2" rs="3" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="84" r="2" cs="4" s="0">
+<O>
+<![CDATA[this day]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="88" r="2" cs="3" s="0">
+<O>
+<![CDATA[this week]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="91" r="2" cs="2" s="0">
+<O>
+<![CDATA[Hatching eggs cum.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="94" r="2" cs="8" s="0">
+<O>
+<![CDATA[GridBand10]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="102" r="2" cs="8" s="0">
+<O>
+<![CDATA[GridBand10]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="3" rs="2" s="0">
+<O>
+<![CDATA[d]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="3" rs="2" s="0">
+<O>
+<![CDATA[wk]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="3" rs="2" s="0">
+<O>
+<![CDATA[prod]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="3" rs="2" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="3" rs="2" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="3" rs="2" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="3" rs="2" s="0">
+<O>
+<![CDATA[Dead]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="3" rs="2" s="0">
+<O>
+<![CDATA[Cull]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="3" rs="2" s="0">
+<O>
+<![CDATA[Sexing error]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="3" rs="2" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="3" rs="2" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="3" rs="2" s="0">
+<O>
+<![CDATA[birds]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="3" rs="2" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="3" rs="2" s="0">
+<O>
+<![CDATA[Dead]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="3" rs="2" s="0">
+<O>
+<![CDATA[Cull]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="3" rs="2" s="0">
+<O>
+<![CDATA[Sexing error]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="3" rs="2" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="3" rs="2" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="3" rs="2" s="0">
+<O>
+<![CDATA[birds]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="3" rs="2" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="3" rs="2" s="0">
+<O>
+<![CDATA[Add]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="3" rs="2" s="0">
+<O>
+<![CDATA[Less]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="3" rs="2" s="0">
+<O>
+<![CDATA[Add]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="3" rs="2" s="0">
+<O>
+<![CDATA[Less]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="3" rs="2" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="3" rs="2" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="3" rs="2" s="0">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="3" rs="2" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="3" rs="2" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="3" rs="2" s="0">
+<O>
+<![CDATA[Total(d)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="3" rs="2" s="0">
+<O>
+<![CDATA[Total(w)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="3" rs="2" s="0">
+<O>
+<![CDATA[Cum.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="3" rs="2" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="35" r="3" rs="2" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="36" r="3" rs="2" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="37" r="3" rs="2" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="3" cs="3" s="0">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="41" r="3" cs="3" s="0">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="3" rs="2" s="0">
+<O>
+<![CDATA[Act B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="50" r="3" rs="2" s="0">
+<O>
+<![CDATA[Std B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="51" r="3" rs="2" s="0">
+<O>
+<![CDATA[% Uniformity]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="52" r="3" rs="2" s="0">
+<O>
+<![CDATA[Act B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="53" r="3" rs="2" s="0">
+<O>
+<![CDATA[Std B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="54" r="3" rs="2" s="0">
+<O>
+<![CDATA[% Uniformity]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="69" r="3" rs="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="70" r="3" rs="2" s="0">
+<O>
+<![CDATA[%PD]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="71" r="3" rs="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="72" r="3" rs="2" s="0">
+<O>
+<![CDATA[%PD]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="73" r="3" rs="2" s="0">
+<O>
+<![CDATA[Std.PD%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="74" r="3" rs="2" s="0">
+<O>
+<![CDATA[Act]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="75" r="3" rs="2" s="0">
+<O>
+<![CDATA[Std]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="84" r="3" rs="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="85" r="3" rs="2" s="0">
+<O>
+<![CDATA[%HE]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="86" r="3" rs="2" s="0">
+<O>
+<![CDATA[Std No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="87" r="3" rs="2" s="0">
+<O>
+<![CDATA[Act/Std]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="88" r="3" rs="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="89" r="3" rs="2" s="0">
+<O>
+<![CDATA[%HE]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="90" r="3" rs="2" s="0">
+<O>
+<![CDATA[Std HE%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="91" r="3" rs="2" s="0">
+<O>
+<![CDATA[Act]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="92" r="3" rs="2" s="0">
+<O>
+<![CDATA[Std]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="94" r="3" rs="2" s="0">
+<O>
+<![CDATA[Responsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="95" r="3" rs="2" s="0">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="96" r="3" rs="2" s="0">
+<O>
+<![CDATA[Vac Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="97" r="3" rs="2" s="0">
+<O>
+<![CDATA[Manufacturers]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="98" r="3" rs="2" s="0">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="99" r="3" rs="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="100" r="3" rs="2" s="0">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="101" r="3" rs="2" s="0">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="102" r="3" rs="2" s="0">
+<O>
+<![CDATA[Responsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="103" r="3" rs="2" s="0">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="104" r="3" rs="2" s="0">
+<O>
+<![CDATA[Med Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="105" r="3" rs="2" s="0">
+<O>
+<![CDATA[Manufacturers]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="106" r="3" rs="2" s="0">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="107" r="3" rs="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="108" r="3" rs="2" s="0">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="109" r="3" rs="2" s="0">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="4" s="0">
+<O>
+<![CDATA[Feed type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="39" r="4" s="0">
+<O>
+<![CDATA[Feed program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="40" r="4" s="0">
+<O>
+<![CDATA[Fed time(Minute)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="41" r="4" s="0">
+<O>
+<![CDATA[Feed type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="42" r="4" s="0">
+<O>
+<![CDATA[Feed program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="43" r="4" s="0">
+<O>
+<![CDATA[Fed time(Minute)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="5" s="1">
+<O>
+<![CDATA[Date]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="5" s="1">
+<O>
+<![CDATA[d]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="5" s="1">
+<O>
+<![CDATA[wk]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="5" s="1">
+<O>
+<![CDATA[prod]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="5" s="1">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="5" s="1">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="5" s="1">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="5" s="1">
+<O>
+<![CDATA[M/F]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="5" s="1">
+<O>
+<![CDATA[Dead]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="5" s="1">
+<O>
+<![CDATA[Cull]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="5" s="1">
+<O>
+<![CDATA[Sexing error]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="5" s="1">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="5" s="1">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="5" s="1">
+<O>
+<![CDATA[birds]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="5" s="1">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="5" s="1">
+<O>
+<![CDATA[Dead]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="5" s="1">
+<O>
+<![CDATA[Cull]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="5" s="1">
+<O>
+<![CDATA[Sexing error]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="5" s="1">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="5" s="1">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="5" s="1">
+<O>
+<![CDATA[birds]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="5" s="1">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="5" s="1">
+<O>
+<![CDATA[Add]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="5" s="1">
+<O>
+<![CDATA[Less]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="5" s="1">
+<O>
+<![CDATA[Add]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="5" s="1">
+<O>
+<![CDATA[Less]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="5" s="1">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="5" s="1">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="5" s="1">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="5" s="1">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="5" s="1">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="5" s="1">
+<O>
+<![CDATA[Total(d)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="5" s="1">
+<O>
+<![CDATA[Total(w)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="5" s="1">
+<O>
+<![CDATA[Cum.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="5" s="1">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="35" r="5" s="1">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="36" r="5" s="1">
+<O>
+<![CDATA[Female]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="37" r="5" s="1">
+<O>
+<![CDATA[Male]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="38" r="5" s="1">
+<O>
+<![CDATA[Feed type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="39" r="5" s="1">
+<O>
+<![CDATA[Feed program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="40" r="5" s="1">
+<O>
+<![CDATA[Fed time(Minute)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="41" r="5" s="1">
+<O>
+<![CDATA[Feed type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="42" r="5" s="1">
+<O>
+<![CDATA[Feed program]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="43" r="5" s="1">
+<O>
+<![CDATA[Fed time(Minute)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="44" r="5" s="1">
+<O>
+<![CDATA[kl.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="45" r="5" s="1">
+<O>
+<![CDATA[Water/Feed]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="46" r="5" s="1">
+<O>
+<![CDATA[ml./bird]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="47" r="5" s="1">
+<O>
+<![CDATA[Hour]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="48" r="5" s="1">
+<O>
+<![CDATA[Lux]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="49" r="5" s="1">
+<O>
+<![CDATA[Act B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="50" r="5" s="1">
+<O>
+<![CDATA[Std B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="51" r="5" s="1">
+<O>
+<![CDATA[% Uniformity]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="52" r="5" s="1">
+<O>
+<![CDATA[Act B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="53" r="5" s="1">
+<O>
+<![CDATA[Std B.W.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="54" r="5" s="1">
+<O>
+<![CDATA[% Uniformity]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="55" r="5" s="1">
+<O>
+<![CDATA[ND]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="56" r="5" s="1">
+<O>
+<![CDATA[AI-H9]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="57" r="5" s="1">
+<O>
+<![CDATA[AI-H5]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="58" r="5" s="1">
+<O>
+<![CDATA[Cons]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="59" r="5" s="1">
+<O>
+<![CDATA[MIN]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="60" r="5" s="1">
+<O>
+<![CDATA[MAX]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="61" r="5" s="1">
+<O>
+<![CDATA[MIN]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="62" r="5" s="1">
+<O>
+<![CDATA[MAX]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="63" r="5" s="1">
+<O>
+<![CDATA[MIN]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="64" r="5" s="1">
+<O>
+<![CDATA[MAX]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="65" r="5" s="1">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="66" r="5" s="1">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="67" r="5" s="1">
+<O>
+<![CDATA[Max]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="68" r="5" s="1">
+<O>
+<![CDATA[Min]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="69" r="5" s="1">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="70" r="5" s="1">
+<O>
+<![CDATA[%PD]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="71" r="5" s="1">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="72" r="5" s="1">
+<O>
+<![CDATA[%PD]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="73" r="5" s="1">
+<O>
+<![CDATA[Std.PD%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="74" r="5" s="1">
+<O>
+<![CDATA[Act]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="75" r="5" s="1">
+<O>
+<![CDATA[Std]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="76" r="5" s="1">
+<O>
+<![CDATA[Act wt(g)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="77" r="5" s="1">
+<O>
+<![CDATA[Std wt(g)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="78" r="5" s="1">
+<O>
+<![CDATA[DY]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="79" r="5" s="1">
+<O>
+<![CDATA[Small]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="80" r="5" s="1">
+<O>
+<![CDATA[Caface]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="81" r="5" s="1">
+<O>
+<![CDATA[Broken]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="82" r="5" s="1">
+<O>
+<![CDATA[Lost]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="83" r="5" s="1">
+<O>
+<![CDATA[Total]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="84" r="5" s="1">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="85" r="5" s="1">
+<O>
+<![CDATA[%HE]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="86" r="5" s="1">
+<O>
+<![CDATA[Std No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="87" r="5" s="1">
+<O>
+<![CDATA[Act/Std]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="88" r="5" s="1">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="89" r="5" s="1">
+<O>
+<![CDATA[%HE]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="90" r="5" s="1">
+<O>
+<![CDATA[Std HE%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="91" r="5" s="1">
+<O>
+<![CDATA[Act]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="92" r="5" s="1">
+<O>
+<![CDATA[Std]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="93" r="5" s="1">
+<O>
+<![CDATA[Feed/Egg(g)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="94" r="5" s="1">
+<O>
+<![CDATA[Responsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="95" r="5" s="1">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="96" r="5" s="1">
+<O>
+<![CDATA[Vac Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="97" r="5" s="1">
+<O>
+<![CDATA[Manufacturers]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="98" r="5" s="1">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="99" r="5" s="1">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="100" r="5" s="1">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="101" r="5" s="1">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="102" r="5" s="1">
+<O>
+<![CDATA[Responsible]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="103" r="5" s="1">
+<O>
+<![CDATA[Route]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="104" r="5" s="1">
+<O>
+<![CDATA[Med Type]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="105" r="5" s="1">
+<O>
+<![CDATA[Manufacturers]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="106" r="5" s="1">
+<O>
+<![CDATA[Dose]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="107" r="5" s="1">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="108" r="5" s="1">
+<O>
+<![CDATA[Batch No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="109" r="5" s="1">
+<O>
+<![CDATA[Time(Min)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="DocDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row()%2==0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-2171170"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="1" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="DateAge"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="2" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WeekAge"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="3" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ProdAge"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OBFemQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OBMaleQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OBQtyTotal"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="7" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FMRatio"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="8" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="9" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemCQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="10" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemMQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="11" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCTotalByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="12" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCRateByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="13" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCTotal"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="14" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemDCRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="15" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="16" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleCQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="17" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleMQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="18" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDCTotalByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="19" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDCRateByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="20" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDCTotal"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="21" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleDCRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="22" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemAdd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="23" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemLess"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="24" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleAdd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="25" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleLess"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="26" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="27" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="28" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="QtyTotal"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="29" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemFeedQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="30" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleFeedQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="31" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedQtyByD"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="32" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedQtyByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="33" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeedQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="34" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemFeedAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="35" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleFeedAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="36" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemFeedAvgW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="37" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleFeedAvgW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="38" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemFeedBat"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="39" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemProgram"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="40" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemFeedTime"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="41" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleFeedBat"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="42" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleProgram"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="43" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleFeedTime"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="44" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WaterQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="45" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WFRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="46" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="WaterAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="47" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="LightHour"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="48" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="LightLux"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="49" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemWeiAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="50" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemWeiStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="51" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FemWeiUn"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="52" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleWeiAvg"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="53" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleWeiStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="54" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MaleWeiUn"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="55" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="AntiND"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="56" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="AntiH9"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="57" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="AntiH5"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="58" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FuleQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="59" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMinTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="60" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMaxTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="61" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMinTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="62" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMaxTemp"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="63" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeTempMin"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="64" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FeTempMax"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="65" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMaxHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="66" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutMinHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="67" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMaxHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="68" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InMinHumi"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="69" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="70" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggRatio"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="71" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggTotalByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="72" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggRatioByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="73" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggRatioStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="74" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggTotalFact"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="75" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggTotalStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="76" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggWFact"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="77" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="EggWStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="78" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="DYEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="79" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="SMEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="80" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="CAEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="81" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="BREggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="82" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="LEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="83" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="CullEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="84" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="85" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggRatio"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="86" r="6" s="2">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="87" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggeff"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="88" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggTotalByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="89" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggRatioByW"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="90" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggRatioStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="91" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggTotalFact"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="92" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggTotalStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="93" r="6" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FERatio"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="94" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacMan"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="95" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacRoute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="96" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="97" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacMade"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="98" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacDose"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="99" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacUsed"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="100" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacBatch"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="101" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="VacMinute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="102" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedMan"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="103" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedRoute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="104" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="105" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedMade"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="106" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedDose"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="107" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedUsed"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="108" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedBatch"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="109" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MedMinute"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="332640000" height="42768000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="1" size="80"/>
+<Background name="ColorBackground" color="-6697729"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="80"/>
+<Background name="ColorBackground" color="-6697729"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="88"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00]]></Format>
+<FRFont name="SimSun" style="0" size="88"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="IAA"/>
+<PreviewType PreviewType="0"/>
+</WorkBook>

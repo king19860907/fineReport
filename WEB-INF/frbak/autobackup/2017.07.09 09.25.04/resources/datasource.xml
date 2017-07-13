@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DatasourceManager xmlVersion="20151125" releaseVersion="8.0.0">
+<ConnectionMap>
+<Connection name="FRDemo" class="com.fr.data.impl.JDBCDatabaseConnection">
+<DatabaseAttr/>
+<JDBCDatabaseAttr url="jdbc:sap:192.168.11.211:30015?reconnect=true" driver="com.sap.db.jdbc.Driver" user="SYSTEM" password="___0041002d00390078000200b000490065" encryptPassword="true">
+<DBCPAttr validationQuery="select * from &quot;SBODEMOUS&quot;.&quot;OCRD&quot; limit 10"/>
+</JDBCDatabaseAttr>
+</Connection>
+</ConnectionMap>
+<TableDataMap>
+<TableData name="员工信息表" class="com.fr.data.impl.DBTableData">
+<Parameters/>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT * FROM 员工信息表]]></Query>
+</TableData>
+<TableData name="用户信息表" class="com.fr.data.impl.DBTableData">
+<Parameters/>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT * FROM [userinfo]A]]></Query>
+</TableData>
+<TableData name="staff" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[name,,.,,password,,.,,fullname,,.,,department,,.,,position,,.,,email]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData>
+<![CDATA[NKR(5_CuhHceX@ZJr43gM]Aq\nnM\Eu%AP_K42>P72$?YOP7\=o#Y($lBHiQI$t"a4ls!$4Y!
+A)e9DcGOTBE\]A=Yg>_+LSYlOkp5/BeAeS-kAkn,>VV)GKKLq)#(]At(bH_=<NWKJ%$>Gn-^K1
+LOu99gdDH)UCKZ5V,)LPsa[ZL>DgqjE-Id,LL,R52W7$^k,;rg/lkm<NQP'Ae9(J\GT*mC:&
+l=.V^sSV"`^,,jO-AE\$#Y#4Bb(tIG$<&o0#0gbhqTN8D.q4.E?joZ%GUAr.r8SOIT=PU#RP
+M+aGPifFZB.?[F^g-V\cI'*7nY^1]Anf0WFQkBcf<q(GFG>T#Eqmr=79k7LN_nUaCbUnl8$$u
+24F,+3laI-I*l,+1gSk$9Si7"<J638/oc*V\#BDt\`Cut8qY4ZYi"EM=MsV<k<!b,SAf0sbG
+)-0`o5&UarB=n9j]A.Fi2gCF?N~
+]]></RowData>
+</TableData>
+<TableData name="上报用户" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[一级用户,,.,,二级用户,,.,,三级用户]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData>
+<![CDATA[.k]A)iairdebf`Z?%*?iWWldlV9.pJ^#bc:389nqsVb^nZ6i\W>SsfoI!rr~
+]]></RowData>
+</TableData>
+<TableData name="selectPulletFarm" class="com.fr.data.impl.DBTableData">
+<Parameters/>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[			 SELECT "PrcCode", "PrcName" FROM "SBO_AG_FARM"."OPRC" T0
+ JOIN (
+ 	SELECT T0."USER_CODE",T0."USERID",T2."FormId" "FarmID"  ,T3."U_CostType"
+			 FROM "SBO_AG_FARM"."OUSR" T0
+			   CROSS JOIN "SBO_AG_FARM"."OUPT" T1
+			   INNER JOIN "SBO_AG_FARM"."UPT1" T2 ON T1."AbsId" = T2."PermId"
+			   INNER JOIN "SBO_AG_FARM"."OPRC" T3 ON T2."FormId" = T3."PrcCode"
+			 WHERE T1."FathId" = 'MTC_UFM' AND T0."SUPERUSER"='Y'
+			 UNION ALL
+			 SELECT T0."USER_CODE",T0."USERID",T2."FormId" "FarmID"  , T4."U_CostType"
+			 FROM "SBO_AG_FARM"."OUSR" T0
+			   CROSS JOIN "SBO_AG_FARM"."OUPT" T1
+			   INNER JOIN "SBO_AG_FARM"."UPT1" T2 ON T1."AbsId" = T2."PermId"
+			   INNER JOIN "SBO_AG_FARM"."USR3" T3 ON T0."USERID" = T3."UserLink" AND T1."AbsId" = T3."PermId"  AND T3."Permission"='F'
+			   JOIN "SBO_AG_FARM"."OPRC" T4 ON T2."FormId" = T4."PrcCode"
+			 WHERE T1."FathId" = 'MTC_UFM' AND T0."SUPERUSER"='N' AND T0."GROUPS"=0
+ ) T1 ON T0."PrcCode" = T1."FarmID" 
+ JOIN "SBO_AG_FARM"."OUSR" T2 ON T1."USERID" = T2."USERID"
+WHERE (T2."USER_CODE" = 'manager') AND T1."U_CostType" ='P'
+ORDER BY 1]]></Query>
+</TableData>
+<TableData name="selectBatch" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="farmCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT T0."PrcCode",T0."PrcName" FROM SBO_AG_FARM.OPRC T0
+    INNER JOIN SBO_AG_FARM.OPRC T1 ON T1."PrcCode" ='${farmCode}' AND T1."DimCode" = '1' 
+WHERE (CASE WHEN T1."U_CostType"  IN ('P') THEN T0."U_PulFact" 
+           WHEN T1."U_CostType" IN ('G') THEN T0."U_FarmCode"
+           WHEN T1."U_CostType" IN ('L') THEN T0."U_LayerFact" END) = '${farmCode}' AND T0."DimCode" = 3]]></Query>
+</TableData>
+<TableData name="selectLayerFarm" class="com.fr.data.impl.DBTableData">
+<Parameters/>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[			 SELECT "PrcCode", "PrcName" FROM "SBO_AG_FARM"."OPRC" T0
+ JOIN (
+ 	SELECT T0."USER_CODE",T0."USERID",T2."FormId" "FarmID"  ,T3."U_CostType"
+			 FROM "SBO_AG_FARM"."OUSR" T0
+			   CROSS JOIN "SBO_AG_FARM"."OUPT" T1
+			   INNER JOIN "SBO_AG_FARM"."UPT1" T2 ON T1."AbsId" = T2."PermId"
+			   INNER JOIN "SBO_AG_FARM"."OPRC" T3 ON T2."FormId" = T3."PrcCode"
+			 WHERE T1."FathId" = 'MTC_UFM' AND T0."SUPERUSER"='Y'
+			 UNION ALL
+			 SELECT T0."USER_CODE",T0."USERID",T2."FormId" "FarmID"  , T4."U_CostType"
+			 FROM "SBO_AG_FARM"."OUSR" T0
+			   CROSS JOIN "SBO_AG_FARM"."OUPT" T1
+			   INNER JOIN "SBO_AG_FARM"."UPT1" T2 ON T1."AbsId" = T2."PermId"
+			   INNER JOIN "SBO_AG_FARM"."USR3" T3 ON T0."USERID" = T3."UserLink" AND T1."AbsId" = T3."PermId"  AND T3."Permission"='F'
+			   JOIN "SBO_AG_FARM"."OPRC" T4 ON T2."FormId" = T4."PrcCode"
+			 WHERE T1."FathId" = 'MTC_UFM' AND T0."SUPERUSER"='N' AND T0."GROUPS"=0
+ ) T1 ON T0."PrcCode" = T1."FarmID" 
+ JOIN "SBO_AG_FARM"."OUSR" T2 ON T1."USERID" = T2."USERID"
+WHERE (T2."USER_CODE" = 'manager') AND T1."U_CostType" ='L'
+ORDER BY 1]]></Query>
+</TableData>
+<TableData name="selectHouse" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="farmCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[           
+SELECT "PrcCode", "PrcName" FROM SBO_AG_FARM.OPRC T0
+WHERE ( T0."U_FarmCode" = '${farmCode}') AND T0."DimCode" = 2]]></Query>
+</TableData>
+</TableDataMap>
+</DatasourceManager>

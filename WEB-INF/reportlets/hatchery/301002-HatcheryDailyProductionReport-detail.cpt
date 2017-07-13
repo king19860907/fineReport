@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20151125" releaseVersion="8.0.0">
+<TableDataMap>
+<TableData name="ds1" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="endDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="batchCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="houseCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="startDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="farmCode"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT T0."DocEntry",
+         T0."DocNum",
+         T0."FarmCode",
+         T0."OcrCode3",
+         T0."BatchNum",
+         T0."ChickType",
+         T0."DocDate",
+         T0."ChickData",
+         T0."ChickAgeMin",
+         T0."ChickAgeMax",
+         T0."MnfDateMin",
+         T0."MnfDateMax",
+         T0."MnfAgeMin",
+         T0."MnfAgeMax",
+         CAST(T0."ChickAgeMin" AS varchar(20)) || '-' || CAST(T0."ChickAgeMax" AS varchar(20)) AS "ChickAge", CAST(CAST(T0."MnfDateMin" AS date) AS varchar(20)) || '/' || CAST(CAST(T0."MnfDateMax" AS date) AS varchar(20)) AS "MnfDate", CAST(T0."MnfAgeMin" AS varchar(20)) || '-' || CAST(T0."MnfAgeMax" AS varchar(20)) AS "MnfAge", T0."IncuCode", T0."GiveCode", T0."HaEggQty", T0."InfEggQty", T0."InfEggRate", T0."FerEggRateStd", T0."FerEggQty", T0."FerEggRate", T0."GermEggQty", T0."GermEggRate", T0."TransferQty", T0."TransferRate", T0."ShellQty", T0."ShellRate", T0."LostEggQty", T0."LostEggRate", T0."ChickQty", T0."ChickRate", T0."ChickRateStd", T0."OutQty", T0."OutRate", T0."HealAActQty", T0."HealBActQty", T0."HealAActQty" + T0."HealAActQty" AS "HealActQty", T0."HealActRate", T0."ChickStdQty", T0."ChickActStd", T0."HealStdQty", T0."HealActStd", T0."HOFRate", T0."Notes", T1."DocEntry" AS "Expr1", T1."DocNum", T1."Series", T2."FerEggRateAVG", T2."GermEggRateAVG", T2."InfEggRateAVG", T2."LostEggRateAVG", T2."OutRateAVG", T2."ShellRateAVG", T2."TransferRateAVG", T2."HealActQtyRateAVG", T2."ChickRateAVG", T1."ItemCode", T1."Status", T1."Type", T1."PlannedQty", T1."CmpltQty", T1."RjctQty", T1."PostDate", T1."DueDate", T1."OriginAbs", T1."OriginNum", T1."OriginType", T1."UserSign", T1."Comments", T1."CloseDate", T1."RlsDate", T1."CardCode", T1."Warehouse", T1."Uom", T1."LineDirty", T1."WOR1Count", T1."JrnlMemo", T1."TransId", T1."CreateDate", T1."Printed", T1."OcrCode", T1."PIndicator", T1."OcrCode2", T1."OcrCode3", T1."OcrCode4", T1."OcrCode5", T1."SeqCode", T1."Serial", T1."SeriesStr", T1."SubStr", T1."LogInstanc", T1."UserSign2", T1."UpdateDate", T1."Project", T1."SupplCode", T1."U_ChickSexy", T1."U_STWeekAge", T1."U_ChickType", T1."U_IncuCode", T1."U_IncuMinQty", T1."U_GiveCode", T1."U_GiveSou", T1."U_CompQt", T1."U_FeedModel", T1."U_OrdType", T1."U_ClasNum", T1."U_BatchNum"
+FROM SBO_AG_FARM.U_PFOWOR T0
+INNER JOIN SBO_AG_FARM.OWOR T1
+    ON T0."DocNum" = T1."DocNum"
+        AND T1."Status" <> 'P'
+INNER JOIN 
+    (SELECT T0."FarmCode",
+         T0."OcrCode3",
+         T0."BatchNum",
+         T0."MnfAgeMin",
+         SUM("InfEggQty") AS "a",
+         SUM("HaEggQty") AS "b",
+         SUM("GermEggQty") AS "c",
+         SUM("ShellQty") AS "d",
+         SUM("LostEggQty") AS "e",
+         SUM("OutQty") AS "f",
+         SUM("FerEggQty") AS "g",
+         SUM("TransferQty") AS "h",
+         SUM("HealAActQty") AS "i",
+         SUM("HealBActQty") AS "j",
+         SUM("ChickQty") AS "k",
+         ROUND(IFNULL(SUM(T0."InfEggQty") * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "InfEggRateAVG",
+         ROUND(IFNULL(SUM(T0."GermEggQty") * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "GermEggRateAVG",
+         ROUND(IFNULL(SUM(T0."ShellQty") * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "ShellRateAVG",
+         ROUND(IFNULL(SUM(T0."LostEggQty") * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "LostEggRateAVG",
+         ROUND(IFNULL(SUM(T0."OutQty") * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "OutRateAVG",
+         ROUND(IFNULL(SUM(T0."FerEggQty") * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "FerEggRateAVG",
+         ROUND(IFNULL(SUM(T0."TransferQty") * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "TransferRateAVG",
+         ROUND(IFNULL(SUM((T0."HealAActQty" + T0."HealBActQty")) * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "HealActQtyRateAVG",
+         ROUND(IFNULL((SUM(T0."ChickQty")) * 1.00 / NULLIF(SUM(T0."HaEggQty"),
+         0),
+         0) * 100,
+         2) AS "ChickRateAVG"
+    FROM SBO_AG_FARM.U_PFOWOR T0
+    INNER JOIN SBO_AG_FARM.OWOR T1
+        ON T0."DocNum" = T0."DocNum"
+    WHERE (T0."FarmCode" = '${farmCode}'
+            OR IFNULL('${farmCode}', '') = '')
+            AND (T0."BatchNum" = '${batchCode}'
+            OR IFNULL('${batchCode}', '') = '')
+            AND (T0."OcrCode3" = '${houseCode}'
+            OR IFNULL('${houseCode}', '') = '')
+    GROUP BY  T0."FarmCode", T0."OcrCode3", T0."BatchNum", T0."MnfAgeMin") AS T2
+    ON T2."FarmCode" = T0."FarmCode"
+        AND T2."BatchNum" = T0."BatchNum"
+        AND T2."MnfAgeMin" = T0."MnfAgeMin"
+WHERE (T0."FarmCode" = '${farmCode}'
+        OR IFNULL('${farmCode}', '') = '')
+        AND (T0."OcrCode3" = '${houseCode}'
+        OR IFNULL('${houseCode}', '') = '')
+        AND (T0."BatchNum" = '${batchCode}'
+        OR IFNULL('${batchCode}', '') = '')
+        AND (T0."DocDate"
+    BETWEEN '${startDate}'
+        AND '${endDate}');]]></Query>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR F="0" T="2"/>
+<FR/>
+<HC F="0" T="0"/>
+<FC/>
+<UPFCR COLUMN="true" ROW="true"/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[4123112,3757352,2743200,2743200,6849687,4522123,2743200,4688378,2743200,3823854,6916189,2743200,2743200,3158836,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3624349,3391592,4123112,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="1" rs="2" s="0">
+<O>
+<![CDATA[Date set]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="1" rs="2" s="0">
+<O>
+<![CDATA[Date hatched]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="1" rs="2" s="0">
+<O>
+<![CDATA[Doc Num]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="1" rs="2" s="0">
+<O>
+<![CDATA[Age]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="1" rs="2" s="0">
+<O>
+<![CDATA[Prod date]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="1" rs="2" s="0">
+<O>
+<![CDATA[Prod age(wk)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="1" rs="2" s="0">
+<O>
+<![CDATA[Setter]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="1" rs="2" s="0">
+<O>
+<![CDATA[No. eggs set]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="1" cs="2" s="0">
+<O>
+<![CDATA[Infertile eggs]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="1" rs="2" s="0">
+<O>
+<![CDATA[Fertile eggs(STD)%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="1" cs="2" s="0">
+<O>
+<![CDATA[Foul Eggs]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="1" rs="2" s="0">
+<O>
+<![CDATA[Transfer]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="1" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="1" cs="2" s="0">
+<O>
+<![CDATA[Dead in shell]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="1" cs="2" s="0">
+<O>
+<![CDATA[Lost]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="1" cs="3" s="0">
+<O>
+<![CDATA[Chick Hatched]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="1" cs="2" s="0">
+<O>
+<![CDATA[Cull]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="1" cs="2" s="0">
+<O>
+<![CDATA[Healthy chick]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="1" cs="2" s="0">
+<O>
+<![CDATA[Chick Hatched(Std)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="1" cs="3" s="0">
+<O>
+<![CDATA[Healthy chick(Act)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="1" rs="2" s="0">
+<O>
+<![CDATA[HDF]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="2" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="2" s="0">
+<O>
+<![CDATA[%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="2" s="0">
+<O>
+<![CDATA[%t]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="2" s="0">
+<O>
+<![CDATA[No.D]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="2" s="0">
+<O>
+<![CDATA[%D]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="2" s="0">
+<O>
+<![CDATA[No.L]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="2" s="0">
+<O>
+<![CDATA[%L]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="2" s="0">
+<O>
+<![CDATA[No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="2" s="0">
+<O>
+<![CDATA[%.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="2" s="0">
+<O>
+<![CDATA[%std]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="2" s="0">
+<O>
+<![CDATA[No.cu]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="2" s="0">
+<O>
+<![CDATA[%cu]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="2" s="0">
+<O>
+<![CDATA[No.H]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="2" s="0">
+<O>
+<![CDATA[%H]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="2" s="0">
+<O>
+<![CDATA[No.s]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="2" s="0">
+<O>
+<![CDATA[%Act/stds]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="2" s="0">
+<O>
+<![CDATA[A level No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="2" s="0">
+<O>
+<![CDATA[B level No.]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="2" s="0">
+<O>
+<![CDATA[%Act/std HS]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="DocDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row()%2=1]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-2171170"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="1" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ChickData"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="2" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="DocNum"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="3" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ChickAge"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MnfDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="MnfAge"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="IncuCode"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="7" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HaEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="8" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InfEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="9" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="InfEggRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="10" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="FerEggRateStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="11" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="GermEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="12" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="GermEggRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="13" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="TransferQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="14" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="TransferRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="15" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ShellQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="16" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ShellRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="17" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="LostEggQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="18" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="LostEggRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="19" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ChickQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="20" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ChickRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="21" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ChickRateStd"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="22" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="23" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="OutRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="24" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HealActQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="25" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HealActRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="26" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="ChickStdQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="27" r="3" s="1">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HealAActQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="29" r="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HealBActQty"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="30" r="3" s="1">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="HOFRate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="174240000" height="42768000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="1" size="80"/>
+<Background name="ColorBackground" color="-6697729"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="88"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00]]></Format>
+<FRFont name="SimSun" style="0" size="88"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="IAA"/>
+<PreviewType PreviewType="0"/>
+</WorkBook>
