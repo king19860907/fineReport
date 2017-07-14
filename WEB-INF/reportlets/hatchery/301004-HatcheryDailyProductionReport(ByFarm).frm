@@ -566,7 +566,7 @@ if(farmCode != '' && batchCode == ''){
 <ColumnPrivilegeControl/>
 <RowPrivilegeControl/>
 <RowHeight defaultValue="723900">
-<![CDATA[723900,1064029,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<![CDATA[723900,1064029,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
 <ColumnWidth defaultValue="2743200">
 <![CDATA[4089861,4355869,2743200,2743200,6916189,3591098,2743200,3391592,2743200,3158836,4887883,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3325090,2743200,2743200,3624349,2743200]]></ColumnWidth>
 <CellElementList>
@@ -884,7 +884,7 @@ if(farmCode != '' && batchCode == ''){
 <![CDATA[条件属性1]]></Name>
 <Condition class="com.fr.data.condition.FormulaCondition">
 <Formula>
-<![CDATA[row()%2=1]]></Formula>
+<![CDATA[row() % 2 = 1]]></Formula>
 </Condition>
 <HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
 <Scope val="1"/>
@@ -1192,6 +1192,208 @@ if(farmCode != '' && batchCode == ''){
 <PrivilegeControl/>
 <Expand dir="0"/>
 </C>
+<C c="0" r="4" cs="7" s="3">
+<O>
+<![CDATA[Summary]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(h4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(i4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=AVERAGE(j4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(k4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(l4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(m4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(n4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(o4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(p4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(q4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(r4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(s4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(t4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(u4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(v4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(w4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(x4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(y4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(z4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(aa4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="4" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(ac4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="4" s="3">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=sum(ad4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="4" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="4" s="4">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=average(af4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="15" s="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
 </CellElementList>
 <ReportAttrSet>
 <ReportSettings headerHeight="0" footerHeight="0">
@@ -1231,6 +1433,35 @@ if(farmCode != '' && batchCode == ''){
 <Left style="1"/>
 <Right style="1"/>
 </Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="ColorBackground" color="-3342337"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00]]></Format>
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="ColorBackground" color="-3342337"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0]]></Format>
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border/>
 </Style>
 </StyleList>
 <showToolbar showtoolbar="false"/>
